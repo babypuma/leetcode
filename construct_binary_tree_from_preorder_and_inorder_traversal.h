@@ -1,3 +1,16 @@
+/*
+ * Author : Jeremy Zhao
+ * Email  : jqzhao@live.com
+ * Date   : 2014/10/27
+ *
+ * Source : https://oj.leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
+ * Problem:	Construct Binary Tree from Preorder and Inorder Traversal
+ * Description: 
+ *	Given preorder and inorder traversal of a tree, construct the binary tree.
+ * Note:
+ *	You may assume that duplicates do not exist in the tree.
+ *               
+ */
 #include <vector>
 using std::vector;
 

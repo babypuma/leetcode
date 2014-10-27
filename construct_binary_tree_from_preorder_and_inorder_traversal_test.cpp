@@ -1,3 +1,12 @@
+/*
+ * Author : Jeremy Zhao
+ * Email  : jqzhao@live.com
+ * Date   : 2014/10/27
+ *
+ * Source : https://oj.leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
+ * Problem:	Construct Binary Tree from Preorder and Inorder Traversal
+ *               
+ */
 #include <gtest/gtest.h>
 #include "construct_binary_tree_from_preorder_and_inorder_traversal.h"
 
