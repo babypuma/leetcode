@@ -23,21 +23,21 @@ class Solution {
 			Section(int x = 0, int y = 0) : min(x), max(y) {}
 		};
 
-		int maxProfit(vector<int> &xx) {
-			int length = xx.size();
+		int maxProfit(vector<int> &prices) {
+			int length = prices.size();
 			int max_profit = 0;
 			int min = 0;
 			int max = 0;
 			for (int i = 1; i < length; i++) {
-				if (xx[i] < xx[min]) {
+				if (prices[i] < prices[min]) {
 					min = i;
 					max = i;
 				}
-				else if (xx[i] > xx[max]) {
+				else if (prices[i] > prices[max]) {
 					max = i;
 				} 
-				if (xx[max] - xx[min] > max_profit) { 
-					max_profit = xx[max] - xx[min]; 
+				if (prices[max] - prices[min] > max_profit) { 
+					max_profit = prices[max] - prices[min]; 
 				}
 			}
 
