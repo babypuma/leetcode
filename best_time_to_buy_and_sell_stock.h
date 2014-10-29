@@ -17,12 +17,6 @@ using std::pair;
 
 class Solution {
 	public:
-		struct Section {
-			int min;
-			int max;
-			Section(int x = 0, int y = 0) : min(x), max(y) {}
-		};
-
 		int maxProfit(vector<int> &prices) {
 			int length = prices.size();
 			int max_profit = 0;
