@@ -1,3 +1,12 @@
+/*
+ * Author : Jeremy Zhao
+ * Email  : jqzhao@live.com
+ * Date   : 2014/10/30
+ *
+ * Source : https://oj.leetcode.com/problems/insertion-sort-list/
+ * Problem:	Insertion Sort List
+ *
+ */
 #include <gtest/gtest.h>
 #include "insertion_sort_list.h"
 
@@ -23,12 +32,12 @@ TEST_F(SolutionTest, case1) {
 
 	int b[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 	node = solution_.insertionSortList(head);
-	size_t j = 0;
+	size_t i = 0;
 	while (node != NULL) {
-		EXPECT_EQ(b[j], node->val);
+		EXPECT_EQ(b[i], node->val);
 		node = node->next;
-		j++;
+		i++;
 	}
-	EXPECT_EQ(j, sizeof(b)/sizeof(int));
+	EXPECT_EQ(i, sizeof(b)/sizeof(int));
 }
 
