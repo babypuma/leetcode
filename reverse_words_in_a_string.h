@@ -1,3 +1,17 @@
+/*
+ * Author : Jeremy Zhao
+ * Email  : jqzhao@live.com
+ * Date   : 2014/11/03
+ *
+ * Source : https://oj.leetcode.com/problems/reverse-words-in-a-string/
+ * Problem:	Reverse Words in a String
+ * Description: 
+ *	Given an input string, reverse the string word by word.
+ *	For example,
+ * 	Given s = "the sky is blue",
+ *	return "blue is sky the".
+ *
+ */
 #include <string.h>
 #include <string>
 using std::string;
