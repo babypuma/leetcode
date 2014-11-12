@@ -1,6 +1,26 @@
+/*
+ * Author : Jeremy Zhao
+ * Email  : jqzhao@live.com
+ * Date   : 2014/11/12
+ *
+ * Source : https://oj.leetcode.com/problems/binary-tree-maximum-path-sum/
+ * Problem:	Binary Tree Maximum Path Sum
+ * Description: 
+ *	Given a binary tree, find the maximum path sum.
+ * 	The path may start and end at any node in the tree.
+ * 	For example:
+ *	Given the below binary tree,
+ * 			   1
+ * 			  / \ 
+ *			 2   3
+ * 	Return 6.
+ *
+ */
 #include <stdio.h>
 #include <stack>
 using std::stack;
+
+#define INT32_MIN 0x80000000
 
 struct TreeNode {
     int val;
@@ -43,38 +63,31 @@ class Solution {
 				else {
 					if (node->tn->left != NULL && node->tn->right != NULL) {
 						if (node->tn->left->val >= node->tn->right->val) {
-							node->tn->val += node->tn->left->val;
-								printf("b 1\n");
-							if (node->tn->right->val > 0) {
-								curr_max = node->tn->val + node->tn->right->val;
+							if (node->tn->left->val > 0) {
+								node->tn->val += node->tn->left->val;
 							}
-							else {
-								curr_max = node->tn->val;
+							curr_max = node->tn->val;
+							if (node->tn->right->val > 0) {
+								curr_max += node->tn->right->val;
 							}
 						}
 						else {
-								printf("b 2\n");
-							node->tn->val += node->tn->right->val;
-							if (node->tn->left->val > 0) {
-								curr_max = node->tn->val + node->tn->left->val;
+							if (node->tn->right->val > 0) {
+								node->tn->val += node->tn->right->val;
 							}
-							else {
-								curr_max = node->tn->val;
+							curr_max = node->tn->val;
+							if (node->tn->left->val > 0) {
+								curr_max += node->tn->left->val;
 							}
 						}
 					}
-					else if (node->tn->left != NULL && node->tn->right == NULL) {
-								printf("b 3\n");
-						node->tn->val += node->tn->left->val;
-						curr_max = node->tn->val;
-					}
-					else if (node->tn->left == NULL && node->tn->right != NULL) {
-								printf("b 4\n");
-						node->tn->val += node->tn->right->val;
-						curr_max = node->tn->val;
-					}
 					else {
-								printf("b 5\n");
+						if (node->tn->left != NULL && node->tn->left->val > 0) {
+							node->tn->val += node->tn->left->val;
+						}
+						else if (node->tn->right != NULL && node->tn->right->val > 0) {
+							node->tn->val += node->tn->right->val;
+						}
 						curr_max = node->tn->val;
 					}
 

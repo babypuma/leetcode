@@ -1,3 +1,12 @@
+/*
+ * Author : Jeremy Zhao
+ * Email  : jqzhao@live.com
+ * Date   : 2014/11/12
+ *
+ * Source : https://oj.leetcode.com/problems/binary-tree-maximum-path-sum/
+ * Problem:	Binary Tree Maximum Path Sum
+ *
+ */
 #include <gtest/gtest.h>
 #include "binary_tree_maximum_path_sum.h"
 
