@@ -1,3 +1,16 @@
+/*
+ * Author : Jeremy Zhao
+ * Email  : jqzhao@live.com
+ * Date   : 2014/11/13
+ *
+ * Source : https://oj.leetcode.com/problems/multiply-strings/
+ * Problem:	Multiply Strings
+ * Description: 
+ *	Given two numbers represented as strings, return multiplication of the numbers as a string.  
+ * Note: 
+ *	The numbers can be arbitrarily large and are non-negative.
+ *
+ */
 #include <string>
 #include <vector>
 using std::string;
@@ -12,15 +25,21 @@ class Solution {
 		}
 
 	    string multiply(string num1, string num2) { 
+			if (num1 == "0" || num2 == "0") {
+				return string("0");
+			}
+			reverse(num1);
+			reverse(num2);
 			size_t length1 = num1.size();	
 			size_t length2 = num2.size();	
 			vector<string> sum;
-			size_t max_length = 0;
 			for (size_t i = 0; i < length1; i++) {
 				string m = doMultiply(num1[i], num2, length2);
 				sum.push_back(m);
 			}
+
 			size_t length = sum.size();
+			size_t max_length = sum[0].size();
 			for (size_t i = 1; i < length; i++) {
 				sum[i] = string(i, '0') + sum[i];
 				if (sum[i].size() > max_length) {
@@ -28,7 +47,9 @@ class Solution {
 				}
 			} 
 
-			return add(sum, max_length);
+			string mul = add(sum, max_length);
+			reverse(mul);
+			return mul;
 		}
 
 		string doMultiply(char ch, string num, size_t length) {
@@ -61,7 +82,7 @@ class Solution {
 			}
 			string sum;
 			int s;
-			int flag = '0';
+			int flag = 0;
 			for (size_t i = 0; i < max_length; i++) {
 				s = 0;
 				for (size_t j = 0; j < num_length; j++) {
@@ -69,16 +90,30 @@ class Solution {
 						s += num[j][i] - '0';
 					}
 				}
-				s += flag - '0';
+				s += flag;
 				sum += digit2char[s % 10];
-				flag = digit2char[s / 10];
-				//printf("%s\n", sum.c_str());
+				flag = s / 10;
 			}
-			if (flag != '0') {
-				sum += flag - '0';
+			while (flag > 0) {
+				sum += digit2char[flag % 10];
+				flag /= 10;
 			}
 
 			return sum;
+		}
+		
+		void reverse(string &str) {
+			size_t length = str.size();
+			if (length < 2) {
+				return;
+			}
+
+			char temp;
+			for (size_t i = 0; i < length / 2; i++) {
+				temp = str[i];	
+				str[i] = str[(length - 1)- i];
+				str[(length - 1) - i] = temp;
+			}
 		}
 
 	private:

@@ -1,3 +1,12 @@
+/*
+ * Author : Jeremy Zhao
+ * Email  : jqzhao@live.com
+ * Date   : 2014/11/13
+ *
+ * Source : https://oj.leetcode.com/problems/multiply-strings/
+ * Problem:	Multiply Strings
+ *
+ */
 #include <gtest/gtest.h>
 #include "multiply_strings.h"
 
@@ -60,8 +69,23 @@ TEST_F(SolutionTest, case4) {
 	EXPECT_STREQ(mul.c_str(), "0");
 }
 
-TEST_F(SolutionTest, case6) {
+TEST_F(SolutionTest, case5) {
 	string mul = solution_.multiply("1", "1");
 	EXPECT_STREQ(mul.c_str(), "1");
+}
+
+TEST_F(SolutionTest, case6) {
+	string mul = solution_.multiply("123456789", "987654321");
+	EXPECT_STREQ(mul.c_str(), "121932631112635269");
+}
+
+TEST_F(SolutionTest, case7) {
+	string mul = solution_.multiply("167141802233061013023557397451289113296441069", "401716832807512840963");
+	EXPECT_STREQ(mul.c_str(), "67143675422804947379429215144664313370120390398055713625298709447");
+}
+
+TEST_F(SolutionTest, case8) {
+	string mul = solution_.multiply("9136", "0");
+	EXPECT_STREQ(mul.c_str(), "0");
 }
 
