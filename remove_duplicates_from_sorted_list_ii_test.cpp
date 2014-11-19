@@ -1,3 +1,12 @@
+/*
+ * Author : Jeremy Zhao
+ * Email  : jqzhao@live.com
+ * Date   : 2014/11/19
+ *
+ * Source : https://oj.leetcode.com/problems/remove-duplicates-from-sorted-list-ii/
+ * Problem:	Remove Duplicates from Sorted List II
+ *
+ */
 #include <gtest/gtest.h>
 #include "remove_duplicates_from_sorted_list_ii.h"
 
@@ -14,7 +23,7 @@ class SolutionTest : public ::testing::Test {
 TEST_F(SolutionTest, case1) {
 	ListNode *head = new ListNode(1);
 	ListNode *node = head;
-	int a[] = {1, 2, 3, 3, 4, 4, 5};
+	int a[] = {2, 3, 3, 4, 4, 5};
 	for (size_t i = 0; i < sizeof(a)/sizeof(int); i++) {
 		node->next = new ListNode(a[i]);
 		node = node->next;
@@ -34,7 +43,7 @@ TEST_F(SolutionTest, case1) {
 TEST_F(SolutionTest, case2) {
 	ListNode *head = new ListNode(1);
 	ListNode *node = head;
-	int a[] = {1, 1, 1, 2, 3};
+	int a[] = {1, 1, 2, 3};
 	for (size_t i = 0; i < sizeof(a)/sizeof(int); i++) {
 		node->next = new ListNode(a[i]);
 		node = node->next;
