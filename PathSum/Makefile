@@ -12,11 +12,16 @@ CPPFLAGS += -I$(GTEST_DIR)/include
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g -Wall -Wextra
 
-TESTS = test_case
-all : $(TESTS)
+src=$(wildcard *.cpp)
+OBJ=$(patsubst %.cpp, %.o, $(src))
+EXE=$(patsubst %.cpp, %, $(src))
+
+.PHONY: all clean
+
+all : $(EXE)
 
 clean :
-	rm -rf *.o test_case
+	rm -rf *.o $(EXE)
 
 # For simplicity and to avoid depending on Google Test's
 # implementation details, the dependencies specified below are
@@ -28,8 +33,5 @@ gtest-all.o :
 gtest_main.o :
 	$(CXX) $(CPPFLAGS) -I$(GTEST_DIR) $(CXXFLAGS) -c $(GTEST_DIR)/src/gtest_main.cc
 
-%.o : %.cpp
-	$(CXX) -c $(CPPFLAGS) $(CFLAGS) $<
-
-test_case: *_test.o gtest-all.o gtest_main.o
+$(EXE): $(OBJ) gtest-all.o gtest_main.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
