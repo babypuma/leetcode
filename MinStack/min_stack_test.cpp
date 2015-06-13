@@ -21,6 +21,30 @@ class SolutionTest : public ::testing::Test {
 };
 
 TEST_F(SolutionTest, case1) {
-	EXPECT_EQ(1, 1);
+	MinStack mstack;
+	for (int i = 100; i >= 0; i--) {
+		mstack.push(i);
+		EXPECT_EQ(mstack.getMin(), i);
+		EXPECT_EQ(mstack.top(), i);
+	}
+	EXPECT_EQ(mstack.getMin(), 0);
+	EXPECT_EQ(mstack.top(), 0);
+	mstack.pop();
+	EXPECT_EQ(mstack.getMin(), 1);
+	EXPECT_EQ(mstack.top(), 1);
+}
+
+TEST_F(SolutionTest, case2) {
+	MinStack mstack;
+	for (int i = 0; i < 100; i++) {
+		mstack.push(i);
+		EXPECT_EQ(mstack.getMin(), 0);
+		EXPECT_EQ(mstack.top(), i);
+	}
+	EXPECT_EQ(mstack.getMin(), 0);
+	EXPECT_EQ(mstack.top(), 99);
+	mstack.pop();
+	EXPECT_EQ(mstack.getMin(), 0);
+	EXPECT_EQ(mstack.top(), 98);
 }
 

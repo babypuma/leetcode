@@ -16,7 +16,7 @@ src=$(wildcard *.cpp)
 OBJ=$(patsubst %.cpp, %.o, $(src))
 EXE=$(patsubst %.cpp, %, $(src))
 
-.PHONY: all clean
+.PHONY: clean
 
 all : $(EXE)
 
