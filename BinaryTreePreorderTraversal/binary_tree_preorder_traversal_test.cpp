@@ -32,3 +32,16 @@ TEST_F(SolutionTest, case1) {
 	}
 }
 
+TEST_F(SolutionTest, case2) {
+	TreeNode *root = NULL;
+	vector<int> vec = solution_.preorderTraversal(root);
+	ASSERT_TRUE(vec.empty());
+}
+
+TEST_F(SolutionTest, case3) {
+	TreeNode *root = new TreeNode(1);
+	vector<int> vec = solution_.preorderTraversal(root);
+	ASSERT_TRUE(vec.size() == 1);
+	ASSERT_TRUE(vec[0] == 1);
+}
+
