@@ -13,63 +13,40 @@
  * - getMin() -- Retrieve the minimum element in the stack.
  *
  */
-#include <vector>
-
-using std::vector;
+#include <stack>
+using std::stack;
 
 class MinStack {
 	public:
 		MinStack() {
-			min_ = INT32_MAX;
 		}
 
 		void push(int x) {
-			vec_.push_back(x);
-			if (x < min_) {
-				min_ = x;
+			all_.push(x);
+			if (min_.empty() || x <= min_.top()) {
+				min_.push(x);
 			}
 		}
 
 		void pop() {
-			if (vec_.empty()) {
-				return;
+			if (all_.top() == min_.top()) {
+				all_.pop();
+				min_.pop();
 			}
-			int back = top();
-			vec_.pop_back();
-
-			if (back == min_) {
-				findMin();
+			else {
+				all_.pop();
 			}
 		}
 
 		int top() {
-			if (vec_.empty()) {
-				return INT32_MAX;
-			} 
-			
-			return vec_.back();
+			return all_.top();
 		}
 
 		int getMin() {
-			return min_;
+			return min_.top();
 		}
 
 	private:
-		void findMin() {
-			size_t size = vec_.size();
-			if (size == 0) {
-				min_ = INT32_MAX;
-				return;
-			}
-
-			min_ = vec_[0];
-			for (size_t i = 1; i < size; i++) {
-				if (vec_[i] < min_) {
-					min_ = vec_[i];
-				}
-			}
-		}
-
-		vector<int> vec_;
-		int min_;
+		stack<int> all_;
+		stack<int> min_;
 };
