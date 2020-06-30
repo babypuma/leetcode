@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "letter_combinations_of_a_phone_number.h"
+#include "letter_combinations_of_a_phone_number_ii.h"
 
 using std::set;
 
@@ -13,7 +13,7 @@ class SolutionTest : public ::testing::Test {
         Solution solution_;
 };
 
-TEST_F(SolutionTest, case1) {
+TEST_F(SolutionTest, case2) {
 	vector<string> vec;
 	vec = solution_.letterCombinations(string("23"));
 	EXPECT_EQ((int)vec.size(), 9);
