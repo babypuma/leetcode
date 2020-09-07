@@ -10,26 +10,26 @@
  *
  */
 class Solution {
-	public:
-	    int numTrees(int n) {
-			int num[n+1];
-			memset(num, 0, sizeof(num));
-			num[0] = 1;
-			num[1] = 1;
-			
-			return number(num, n);
-		}
-		
-		int number(int a[], int n) {
-			if (a[n] > 0) {
-				return a[n];
-			}
+ public:
+   int numTrees(int n) {
+     int num[n+1];
+     memset(num, 0, sizeof(num));
+     num[0] = 1;
+     num[1] = 1;
 
-			int sum = 0;
-			for (int i = 0; i < n; i++) {
-				sum += number(a, i) * number(a, (n-1)-i);
-			}
+     return number(num, n);
+   }
 
-			return sum;
-		}
+   int number(int a[], int n) {
+     if (a[n] > 0) {
+       return a[n];
+     }
+
+     int sum = 0;
+     for (int i = 0; i < n; i++) {
+       sum += number(a, i) * number(a, (n-1)-i);
+     }
+
+     return sum;
+   }
 };
