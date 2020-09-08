@@ -29,7 +29,14 @@ struct NodeWrapper {
   TreeNode *node;
   int idx;
   int level;
-  NodeWrapper(TreeNode *n, int i, int l) : node(n), idx(i), level(l) {}
+  NodeWrapper(TreeNode *n, int i) : node(n), idx(i) {
+    level = getLevel(idx);
+  }
+
+private:
+  int getLevel(int idx) {
+    return floor(log2(idx + 1));
+  }
 };
 
 class Solution {
@@ -45,7 +52,7 @@ class Solution {
        return;
      }
      queue<NodeWrapper> que;
-     que.push(NodeWrapper(root, 0, 0));
+     que.push(NodeWrapper(root, 0));
      while (!que.empty()) {
        NodeWrapper curr = que.front();
        que.pop();
@@ -60,17 +67,13 @@ class Solution {
 
        if (curr.node->left != nullptr) {
          int idx = 2 * curr.idx + 1;
-         que.push(NodeWrapper(curr.node->left, idx, getLevel(idx)));
+         que.push(NodeWrapper(curr.node->left, idx));
        }
        if (curr.node->right != nullptr) {
          int idx = 2 * curr.idx + 2;
-         que.push(NodeWrapper(curr.node->right, idx, getLevel(idx)));
+         que.push(NodeWrapper(curr.node->right, idx));
        }
      }
-   }
-
-   int getLevel(int idx) {
-     return floor(log2(idx + 1));
    }
 
  private:
