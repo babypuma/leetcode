@@ -2,8 +2,9 @@
  * Author : Jeremy Zhao
  * Email  : jqzhao@live.com
  * Date   : 2015/06/16
+ * Update : 2020/09/27
  *
- * Source : https://leetcode.com/problems/house-robber/
+ * Source : https://leetcode-cn.com/problems/house-robber/
  * Problem:	House Robber
  *
  */
@@ -38,3 +39,14 @@ TEST_F(SolutionTest, case3) {
 	EXPECT_EQ(solution_.rob(vec), 2);
 }
 
+TEST_F(SolutionTest, case4) {
+	int a[] = {2, 1, 1, 2};
+	vector<int> vec(a, a + sizeof(a) / sizeof(int));
+	EXPECT_EQ(solution_.rob(vec), 4);
+}
+
+TEST_F(SolutionTest, case5) {
+	int a[] = {2, 1};
+	vector<int> vec(a, a + sizeof(a) / sizeof(int));
+	EXPECT_EQ(solution_.rob(vec), 2);
+}

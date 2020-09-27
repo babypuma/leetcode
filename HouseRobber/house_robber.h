@@ -2,45 +2,32 @@
  * Author : Jeremy Zhao
  * Email  : jqzhao@live.com
  * Date   : 2015/06/16
+ * Update : 2020/09/27
  *
- * Source : https://leetcode.com/problems/house-robber/
+ * Source : https://leetcode-cn.com/problems/house-robber/
  * Problem:	House Robber
- * Description: 
- *	You are a professional robber planning to rob houses along a street. Each house has 
- *	a certain amount of money stashed, the only constraint stopping you from robbing 
- *	each of them is that adjacent houses have security system connected and it will 
- *	automatically contact the police if two adjacent houses were broken into on the same night.
- *
- * 	Given a list of non-negative integers representing the amount of money of each house, 
- * 	determine the maximum amount of money you can rob tonight without alerting the police.
  *
  */
 #include <vector>
-
 using std::vector;
+using std::max;
 
 class Solution {
-	public: 
-		int rob(vector<int>& nums) {
-			size_t size = nums.size();
-			if (size == 0) {
-				return 0;
-			}
-			if (size == 1) {
-				return nums[0];
-			}
-			vector<int> sum(size, 0);
-			sum[0] = nums[0];
-			sum[1] = nums[0] > nums[1] ? nums[0] : nums[1];
-			for (size_t i = 2; i < size; i++) {
-				if (sum[i - 1] > sum[i - 2] + nums[i]) {
-					sum[i] = sum[i - 1];
-				}
-				else {
-					sum[i] = sum[i - 2] + nums[i];
-				}
-			}
-
-			return sum[size - 1];
-		}
+ public: 
+   int rob(vector<int>& nums) {
+     if (nums.empty()) {
+       return 0;
+     }
+     if (nums.size() == 1) {
+       return nums[0];
+     }
+     vector<int> inc(nums.begin(), nums.end());
+     vector<int> exc(nums.size(), 0);
+     exc[1] = nums[0];
+     for (size_t i = 2; i < nums.size(); ++i) {
+       inc[i] = max(exc[i - 1] + nums[i], inc[i - 2] + nums[i]);
+       exc[i] = max(max(inc[i - 1], inc[i - 2]), max(exc[i - 1], exc[i - 2]));
+     }
+     return max(inc.back(), exc.back());
+   }
 };
