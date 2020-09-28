@@ -21,13 +21,12 @@ class Solution {
      if (nums.size() == 1) {
        return nums[0];
      }
-     vector<int> inc(nums.begin(), nums.end());
-     vector<int> exc(nums.size(), 0);
-     exc[1] = nums[0];
+     vector<int> dp(nums.size());
+     dp[0] = nums[0];
+     dp[1] = max(dp[0], nums[1]);
      for (size_t i = 2; i < nums.size(); ++i) {
-       inc[i] = max(exc[i - 1] + nums[i], inc[i - 2] + nums[i]);
-       exc[i] = max(max(inc[i - 1], inc[i - 2]), max(exc[i - 1], exc[i - 2]));
+       dp[i] = max(dp[i - 1], dp[i - 2] + nums[i]);
      }
-     return max(inc.back(), exc.back());
+     return dp.back();
    }
 };
