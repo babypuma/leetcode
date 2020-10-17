@@ -2,8 +2,9 @@
  * Author : Jeremy Zhao
  * Email  : jqzhao@live.com
  * Date   : 2014/10/29
+ * Update : 2020/10/17
  *
- * Source : https://oj.leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/
+ * Source : https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/
  * Problem:	Best Time to Buy and Sell Stock II
  *               
  */
