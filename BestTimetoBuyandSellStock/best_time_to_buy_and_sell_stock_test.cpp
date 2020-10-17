@@ -2,6 +2,7 @@
  * Author : Jeremy Zhao
  * Email  : jqzhao@live.com
  * Date   : 2014/10/27
+ * Update : 2020/10/15
  *
  * Source : https://oj.leetcode.com/problems/best-time-to-buy-and-sell-stock/
  * Problem:	Best Time to Buy and Sell Stock
@@ -48,5 +49,10 @@ TEST_F(SolutionTest, case5) {
 	int a[] = {3, 5, 1, 4};
 	vector<int> vec(a, a + sizeof(a)/sizeof(int));
 	EXPECT_EQ(solution_.maxProfit(vec), 3);
+}
+
+TEST_F(SolutionTest, case6) {
+	vector<int> vec;
+	EXPECT_EQ(solution_.maxProfit(vec), 0);
 }
 
