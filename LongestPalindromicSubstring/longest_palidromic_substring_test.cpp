@@ -1,17 +1,23 @@
+/*
+ * Author : Jeremy Zhao
+ * Email  : jqzhao@live.com
+ * Date   : 2020/11/07
+ *
+ * Source : https://leetcode-cn.com/problems/longest-palindromic-substring/
+ * Problem:	Longest Palindromic Substring
+ *
+ */
 #include <gtest/gtest.h>
 #include "longest_palidromic_substring.h"
 
-using std::cout;
-using std::endl;
-
 class SolutionTest : public ::testing::Test {
-    protected:
-        virtual void SetUp() {
-        }
-        virtual void TearDown() {
-        }
+ protected:
+   virtual void SetUp() {
+   }
+   virtual void TearDown() {
+   }
 
-        Solution solution_;
+   Solution solution_;
 };
 
 TEST_F(SolutionTest, longestPalindrome) {
@@ -30,6 +36,7 @@ TEST_F(SolutionTest, longestPalindrome) {
     {"aaba", "aba"},
     {"abbb", "bbb"},
     {"abbc", "bb"},
+    {"busislnescsicxpvvysuqgcudefrfjbwwjcchtgqyajdfwvkypfwshnihjdztgmyuuljxgvhdiwphrweyfkbnjgerkmifbirubhseuhrugwrabnjafnbdfjnufdstjbkuwtnpflffaqmjbhssjlnqftgjiglvvequhapasarlkcvbmkwnkuvwktbgfoaxteprobdwswcdyddyvrehvmxrrjiiidatidlpihkbmmruysmhhsncmfdanafdrfpdtfgkglcqpwrrtvacuicohspkounojuziittugpqjyhhkwfnflozbispehrtrnizowrlzcuollagxwtznjwzcumvedjwokueuqktvvouwnsmpxqvvpuwprezrbobrpnwaccwljchdguubjulyilzvmandjjleitweybqkjttschrjjlebnmponvlktzzcdtuybugggcqffkcffpamauvxfbonjrobgpvlyzveiwemmtdvbjciaytvesnocnjrwodtcokgcuoiicxapmrzpkfphjniuvzjrhbnqndfshoduejyktebgdabidxlkstepuwvtrtgbxaeheylicvhrxddijshcvdadxzsccmainyfpfdhqdanfccqkzlmhsfilvoybqojlvbcixjzqpbngdvesuokbxhkomsiqfyukvspqthlzxdnlwthrgaxhtpjzhrugqbfokrdcyurivmzgtynoqfjbafboselxnfupnpqlryvlcxeksirvufepfwczosrrjpudbwqxwldgjyfjhzlzcojxyqjyxxiqvfhjdwtgoqbyeocffnyxhyyiqspnvrpxmrtcnviukrjvpavervvztoxajriuvxqveqsrttjqepvvahywuzwtmgyrzduxfqspeipimyoxmkadrvrdyefekjxcmsmzmtbugyckcbjsrymszftjyllfmoeoylzeahnrxlxpnlvlvzltwnmldi", "rbobr"},
   };
 
   for (size_t i = 0;

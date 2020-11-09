@@ -1,70 +1,44 @@
+/*
+ * Author : Jeremy Zhao
+ * Email  : jqzhao@live.com
+ * Date   : 2020/11/07
+ *
+ * Source : https://leetcode-cn.com/problems/longest-palindromic-substring/
+ * Problem:	Longest Palindromic Substring
+ *
+ */
 #include <string>
+#include <utility>
 using std::string;
+using std::make_pair;
+using std::pair;
 
 class Solution {
  public:
    string longestPalindrome(string s) {
-     string s1 = longestPalindromePattern1(s);
-     string s2 = longestPalindromePattern2(s);
-     return s1.size() >= s2.size() ? s1 : s2;
+     int left = 0;
+     int right = 0;
+     for (int i = 0; i < s.size(); ++i) {
+       auto p1 = expandAroundCenter(s, i, i);
+       auto p2 = expandAroundCenter(s, i, i + 1);
+       if (p1.second - p1.first > right - left) {
+         left = p1.first;
+         right = p1.second;
+       }
+       if (p2.second - p2.first > right - left) {
+         left = p2.first;
+         right = p2.second;
+       }
+     }
+     return s.substr(left, right - left + 1);
    }
 
  private:
-   string longestPalindromePattern1(string& s) {
-     int idx = 0;
-     int radius = 0;
-     for (size_t i = 0; i < s.size(); ++i) {
-       int r = expandPalindromePattern1(s, i);
-       if (r > radius) {
-         radius = r;
-         idx = i;
-       }
+   pair<int, int> expandAroundCenter(const string& s, int left, int right) {
+     while (left >= 0 && right < s.size() && s[left] == s[right]) {
+       --left;
+       ++right;
      }
-     return s.substr(idx - radius, 2 * radius + 1);
-   }
-
-   int expandPalindromePattern1(string& s, int idx) {
-     int radius = 0;
-     int left = idx;
-     int right = idx;
-     while (left >= 0 &&
-            right <= static_cast<int>(s.size() - 1) &&
-            s[left] == s[right]) {
-       left--;
-       right++;
-       radius++;
-     }
-     return radius - 1;
-   }
-
-   string longestPalindromePattern2(string& s) {
-     int idx = 0;
-     int radius = 0;
-     for (size_t i = 0; i < s.size(); ++i) {
-       int r = expandPalindromePattern2(s, i);
-       if (r > radius) {
-         radius = r;
-         idx = i;
-       }
-     }
-     if (radius == 0) {
-       return string();
-     } else {
-       return s.substr(idx - radius + 1, 2 * radius);
-     }
-   }
-
-   int expandPalindromePattern2(string& s, int idx) {
-     int radius = 0;
-     int left = idx;
-     int right = idx + 1;
-     while (left >= 0 &&
-            right <= static_cast<int>(s.size() - 1) &&
-            s[left] == s[right]) {
-       left--;
-       right++;
-       radius++;
-     }
-     return radius;
+     return make_pair(left + 1, right - 1);
    }
 };
