@@ -1,30 +1,26 @@
+/*
+ * Author : Jeremy Zhao
+ * Email  : jqzhao@live.com
+ * Date   : 2020/08/31
+ * Update : 2020/12/07
+ *
+ * Source : https://leetcode-cn.com/problems/container-with-most-water/
+ * Problem:	Container With Most Water
+ *               
+ */
 #include <vector>
-#include <algorithm>
 using std::vector;
 
-#define min(a, b) (a < b ? a : b)
-
 class Solution {
-public:
-    int maxArea(vector<int>& height) {
-      int max_area = 0;
-      std::pair<int, int> p(0, height.size() - 1); 
-      while (p.first < p.second) {
-        int area = (p.second - p.first) * min(height[p.first], height[p.second]);
-        if (area > max_area) {
-          max_area = area;
-        }
-
-        if (height[p.first] < height[p.second]) {
-          ++p.first;
-        } else if (height[p.first] > height[p.second]) {
-          --p.second;
-        } else {
-          ++p.first;
-          --p.second;
-        }
-      }
-
-      return max_area;
-    }
+ public:
+   int maxArea(vector<int>& height) {
+     int left = 0;
+     int right = height.size() - 1;
+     int ans = 0;
+     while (left < right) {
+       ans = std::max(ans, std::min(height[left], height[right]) * (right - left));
+       height[left] <= height[right] ? ++left : --right;
+     }
+     return ans;
+   }
 };
