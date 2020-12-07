@@ -1,69 +1,49 @@
+/*
+ * Author : Jeremy Zhao
+ * Email  : jqzhao@live.com
+ * Date   : 2015/03/18
+ * Update : 2020/11/16
+ *
+ * Source : https://leetcode-cn.com/problems/minimum-window-substring/
+ * Problem:	Minimum Window Substring
+ *               
+ */
 #include <vector>
-#include <tr1/unordered_map>
 using std::vector;
-using std::tr1::unordered_map;
 
 class Solution {
-	public:
-	    vector<vector<int> > threeSum(vector<int> &num) {
-			vector<vector<int> > vv;
-			unordered_map<int, int> vmap;
-			unordered_map<int, int>::iterator it; 
-			std::sort(num.begin(), num.end());
-			int length = num.size();
-			int sum;
-			int index;
-			int first;
-			for (int i = 0; i < length - 2; i++) {
-				if (i == 0) {
-					first = num[0];
-				}
-				else {
-					if (num[i] == first) {
-						continue;
-					}
-					else {
-						first = num[i];
-					}
-				}
-				for (int j = i + 1; j < length - 1; j++) {
-					sum = num[i] + num[j];
-					if (sum > 0) {
-						break;
-					} 
-					if ((it = vmap.find(num[i])) != vmap.end() && it->second == num[j]) {
-						continue;
-					}
-					if ((index = binarySearch(num, j + 1, length - 1, -sum)) != -1) { 
-						vector<int> v;
-						v.push_back(num[i]);
-						v.push_back(num[j]);
-						v.push_back(-sum);
-						vv.push_back(v);
-						vmap[num[i]] = num[j];
-					}
-				}
-			}
+ public:
+   vector<vector<int> > threeSum(vector<int>& nums) {
+     vector<vector<int> > vec2;
+     if (nums.empty()) {
+       return vec2;
+     }
 
-			return vv;
-		}
-
-		int binarySearch(vector<int> &vec, int left, int right, int val) {
-			int mid;
-			while (left <= right) {
-				mid = (left + right)/2;
-				if (vec[mid] == val) {
-					return mid;
-				}
-				
-				if (vec[mid] < val) {
-					left = mid + 1;
-				}
-				else {
-					right = mid - 1;
-				}
-			}
-
-			return -1;
-		}
+     std::sort(nums.begin(), nums.end());
+     int sz = nums.size();
+     for (int i = 0; i < sz - 2; ++i) {
+       if (i > 0 && nums[i] == nums[i - 1]) {
+         continue;
+       }
+       int left = i + 1;
+       int right = sz - 1;
+       while (left < right) {
+         if (nums[i] + nums[left] + nums[right] > 0) {
+           --right;
+         } else if (nums[i] + nums[left] + nums[right] < 0) {
+           ++left;
+         } else {
+           if (vec2.empty() || vec2.back().at(0) != nums[i] || vec2.back().at(1) != nums[left]) {
+             vec2.push_back(vector<int>());
+             vec2.back().push_back(nums[i]);
+             vec2.back().push_back(nums[left]);
+             vec2.back().push_back(nums[right]);
+           }
+           ++left;
+           --right;
+         }
+       }
+     }
+     return vec2;
+   }
 };
