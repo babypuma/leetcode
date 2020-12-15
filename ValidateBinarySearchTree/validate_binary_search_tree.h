@@ -2,15 +2,10 @@
  * Author : Jeremy Zhao
  * Email  : jqzhao@live.com
  * Date   : 2014/11/05
+ * Update : 2020/12/15
  *
- * Source : https://oj.leetcode.com/problems/validate-binary-search-tree/
+ * Source : https://leetcode-cn.com/problems/validate-binary-search-tree/
  * Problem:	Validate Binary Search Tree
- * Description: 
- *	Given a binary tree, determine if it is a valid binary search tree (BST).
- * 	Assume a BST is defined as follows:
- * 	The left subtree of a node contains only nodes with keys less than the node's key.
- *	The right subtree of a node contains only nodes with keys greater than the node's key.
- *	Both the left and right subtrees must also be binary search trees.
  *
  */
 #include <stdio.h>
@@ -21,43 +16,46 @@ struct TreeNode {
     int val;
     TreeNode *left;
     TreeNode *right;
-    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
 class Solution {
-	public:
-		bool isValidBST(TreeNode *root) {
-			return inorderSearch(root);
-		}
+ public:
+   bool isValidBST(TreeNode* root) {
+     return recursive(root, INT64_MIN, INT64_MAX);
+   }
 
-		bool inorderSearch(TreeNode *root) {
-			stack<TreeNode *> st;
-			TreeNode *prev = NULL;
-			TreeNode *node = root;
-			while (!st.empty() || node != NULL) {
-				while (node != NULL) {
-					st.push(node);
-					node = node->left;
-				}
+ private:
+   bool recursive(TreeNode* root, int64_t lower, int64_t upper) {
+     if (root == nullptr) {
+       return true;
+     }
+     if (root->val <= lower || root->val >= upper) {
+       return false;
+     }
+     return recursive(root->left, lower, root->val) && recursive(root->right, root->val, upper);
+   }
 
-				if (node == NULL) {
-					node = st.top();
-					st.pop();
-					if (prev != NULL) {
-						if (prev->val < node->val) {
-							prev = node;
-						}
-						else {
-							return false;
-						}
-					}
-					else {
-						prev = node;
-					}
-					node = node->right;
-				}
-			}
-
-			return true;
-		}
+   bool nonRecursive(TreeNode* root) {
+     stack<TreeNode *> st;
+     TreeNode* node = root;
+     TreeNode* prev = nullptr;
+     while (node != nullptr || !st.empty()) {
+       if (node != nullptr) {
+         st.push(node);
+         node = node->left;
+       } else {
+         node = st.top();
+         st.pop();
+         if (prev != nullptr && node->val <= prev->val) {
+           return false;
+         }
+         prev = node;
+         node = node->right;
+       }
+     }
+     return true;
+   }
 };
