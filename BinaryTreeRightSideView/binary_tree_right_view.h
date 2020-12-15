@@ -2,6 +2,7 @@
  * Author : Jeremy Zhao
  * Email  : jqzhao@live.com
  * Date   : 2020/09/08
+ * Update : 2020/12/15
  *
  * Source : https://leetcode.com/problems/binary-tree-right-side-view/
  * Problem:	Binary Tree Right Side View
@@ -9,7 +10,6 @@
  */
 #include <queue>
 #include <vector>
-#include <cmath>
 using std::queue;
 using std::vector;
 
@@ -25,57 +25,38 @@ struct TreeNode {
   TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
-struct NodeWrapper {
-  TreeNode *node;
-  int idx;
+struct TreeNodeWrapper {
+  TreeNode* node;
   int level;
-  NodeWrapper(TreeNode *n, int i) : node(n), idx(i) {
-    level = getLevel(idx);
-  }
-
-private:
-  int getLevel(int idx) {
-    return floor(log2(idx + 1));
+  int idx;
+  TreeNodeWrapper(TreeNode* n, int l, int i) : node(n), level(l), idx(i) {
   }
 };
 
 class Solution {
  public:
    vector<int> rightSideView(TreeNode* root) {
-     levelOrderTraversal(root);
-     return vec_;
-   }
-
- private:
-   void levelOrderTraversal(TreeNode* root) {
-     if (root == nullptr) {
-       return;
+     vector<int> view;
+     if (root == NULL) {
+       return view;
      }
-     queue<NodeWrapper> que;
-     que.push(NodeWrapper(root, 0));
+
+     queue<TreeNodeWrapper> que;
+     que.push(TreeNodeWrapper(root, 0, 0));
      while (!que.empty()) {
-       NodeWrapper curr = que.front();
+       TreeNodeWrapper wrapper = que.front();
        que.pop();
-       if (!que.empty()) {
-         NodeWrapper next = que.front();
-         if (curr.level < next.level) {
-           vec_.push_back(curr.node->val);
-         }
-       } else {
-         vec_.push_back(curr.node->val);
+       if (que.empty() || que.front().level > wrapper.level) {
+         view.push_back(wrapper.node->val);
        }
-
-       if (curr.node->left != nullptr) {
-         int idx = 2 * curr.idx + 1;
-         que.push(NodeWrapper(curr.node->left, idx));
+       if (wrapper.node->left != NULL) {
+         que.push(TreeNodeWrapper(wrapper.node->left, wrapper.level + 1, 2 * wrapper.idx + 1));
        }
-       if (curr.node->right != nullptr) {
-         int idx = 2 * curr.idx + 2;
-         que.push(NodeWrapper(curr.node->right, idx));
+       if (wrapper.node->right != NULL) {
+         que.push(TreeNodeWrapper(wrapper.node->right, wrapper.level + 1, 2 * wrapper.idx + 2));
        }
      }
-   }
 
- private:
-   vector<int> vec_;
+     return view;
+   }
 };
