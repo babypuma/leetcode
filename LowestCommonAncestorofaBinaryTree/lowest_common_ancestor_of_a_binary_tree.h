@@ -2,102 +2,83 @@
  * Author : Jeremy Zhao
  * Email  : jqzhao@live.com
  * Date   : 2015/07/13
+ * Update : 2020/12/15
  *
  * Source : https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/
  * Problem:	Lowest Common Ancestor of a Binary Tree
- * Description: 
- *	Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
- * 	According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between 
- *	two nodes v and w as the lowest node in T that has both v and w as descendants 
- *	(where we allow a node to be a descendant of itself).”
- *
- * 				 _______3______
- *		        /              \
- *  		 ___5__          ___1__
- * 		    /      \        /      \
- * 	 	    6      _2       0       8
- *      		  /  \
- *				 7   4
- *
- *	For example, the lowest common ancestor (LCA) of nodes 5 and 1 is 3. 
- *	Another example is LCA of nodes 5 and 4 is 5, since a node can be a descendant 
- *	of itself according to the LCA definition.
  *
  */
 #include <stack>
+#include <deque>
 using std::stack;
+using std::deque;
 
 struct TreeNode {
     int val;
     TreeNode *left;
-   	TreeNode *right;
-	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-};
-
-enum TravelMark {
-	TM_LEFT,
-	TM_RIGHT,
-};
-
-struct ExTreeNode {
-	TreeNode *node;
-	TravelMark mark;
-	ExTreeNode(TreeNode *n, TravelMark tm = TM_LEFT) : node(n), mark(tm) {}
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
 class Solution {
-	public:
-		TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-			if (root == NULL || p == NULL || q == NULL) {
-				return NULL;
-			}
+ public:
+   TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+     deque<TreeNode*> que1;
+     getAncestor(root, p, que1);
+     deque<TreeNode*> que2;
+     getAncestor(root, q, que2);
+     TreeNode* anc = NULL;
+     while (!que1.empty() && !que2.empty()) {
+       if (que1.front() == que2.front()) {
+         anc = que1.front();
+         que1.pop_front();
+         que2.pop_front();
+       } else {
+         break;
+       }
+     }
 
-			stack<TreeNode *> st1;
-			stack<TreeNode *> st2;
-			ancestors(root, p, st1);
-			ancestors(root, q, st2);
-			TreeNode *ancestor = NULL;
-			while (!st1.empty() && !st2.empty()) {
-				if (st1.top() != st2.top()) {
-					break;
-				}
-				ancestor = st1.top();
-				st1.pop();
-				st2.pop();
-			}
+     return anc;
+   }
 
-			return ancestor;
-		}
+ private:
+   enum NodeStatus {
+     LEFT,
+     RIGHT,
+   };
+   struct TreeNodeWrapper {
+     TreeNode *node;
+     NodeStatus st;
+     TreeNodeWrapper(TreeNode* n, NodeStatus s) : node(n), st(s) {
+     }
+   };
 
-	private:
-		void ancestors(TreeNode* root, TreeNode* n, stack<TreeNode *> &ancs) {
-			stack<ExTreeNode *> st;
-			while (!st.empty() || root != NULL) {
-				while (root != NULL) {
-					if (root == n) {
-						ancs.push(root);
-						while (!st.empty()) {
-							ancs.push(st.top()->node);
-							st.pop();
-						}
-						return;
-					}
-					st.push(new ExTreeNode(root));
-					root = root->left;
-				}
-
-				if (!st.empty()) {
-					ExTreeNode *exnode = st.top();
-					st.pop();
-					if (exnode->mark == TM_LEFT) { 
-						exnode->mark = TM_RIGHT;
-						st.push(exnode); 
-						root = exnode->node->right;
-					}
-					else {
-						delete exnode;
-					}
-				}
-			}
-		}
+   void getAncestor(TreeNode* root, TreeNode* tn, deque<TreeNode*>& que) {
+     stack<TreeNodeWrapper> st;
+     while (root != NULL || !st.empty()) {
+       if (root != NULL) {
+         st.push(TreeNodeWrapper(root, LEFT));
+         root = root->left;
+       } else {
+         TreeNodeWrapper wrapper = st.top();
+         if (wrapper.st == LEFT) {
+           st.pop();
+           // return from left child
+           st.push(TreeNodeWrapper(wrapper.node, RIGHT));
+           root = wrapper.node->right;
+         } else {
+           // return from right child, visit node
+           if (wrapper.node == tn) {
+             break;
+           }
+           st.pop();
+         }
+       }
+     }
+     while (!st.empty()) {
+       TreeNodeWrapper wrapper = st.top();
+       st.pop();
+       que.push_front(wrapper.node);
+     }
+   }
 };
