@@ -2,15 +2,12 @@
  * Author : Jeremy Zhao
  * Email  : jqzhao@live.com
  * Date   : 2014/10/27
+ * Update : 2020/12/16
  *
- * Source : https://oj.leetcode.com/problems/symmetric-tree/
+ * Source : https://leetcode-cn.com/problems/symmetric-tree/
  * Problem:	Symmetric Tree
- * Description: 
- * 	Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
  *               
  */
-#include <stdio.h>
-
 struct TreeNode {
 	int val;
  	TreeNode *left;
@@ -19,27 +16,19 @@ struct TreeNode {
 };
 
 class Solution {
-	public:
-		bool isSymmetric(TreeNode *root) {
-			if (root == NULL || (root->left == NULL && root->right == NULL)) {
-				return true;
-			}
+ public:
+   bool isSymmetric(TreeNode* root) {
+     return root == NULL || isSym(root->left, root->right);
+   }
 
-			return symmetric(root->left, root->right);
-		}
-
-		bool symmetric(TreeNode *p, TreeNode *q) {
-			if (p == NULL && q == NULL) {
-				return true;
-			}
-			if ((p == NULL && q != NULL) || (p != NULL && q == NULL)) {
-				return false;
-			}
-
-			if (p->val == q->val) {
-				return symmetric(p->left, q->right) && symmetric(p->right, q->left);
-			} 
-			
-			return false;
-		}
+ private:
+   bool isSym(TreeNode* left, TreeNode* right) {
+     if (left == NULL && right == NULL) {
+       return true;
+     }
+     if (left == NULL || right == NULL || left->val != right->val) {
+       return false;
+     }
+     return isSym(left->left, right->right) && isSym(left->right, right->left);
+   }
 };
