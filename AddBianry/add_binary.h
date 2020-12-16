@@ -2,77 +2,51 @@
  * Author : Jeremy Zhao
  * Email  : jqzhao@live.com
  * Date   : 2014/11/09
+ * Update : 2020/12/16
  *
- * Source : https://oj.leetcode.com/problems/add-binary/
+ * Source : https://leetcode-cn.com/problems/add-binary/
  * Problem:	Add Binary
- * Description: 
- *	Given two binary strings, return their sum (also a binary string).  
- *	For example,
- *	a = "11"
- *	b = "1"
- *	Return "100".
  *
  */
 #include <string>
 using std::string;
 
 class Solution {
-	public:
-		Solution() {
-			int2char[0] = '0';
-			int2char[1] = '1';
-		}
-	    string addBinary(string a, string b) {
-			int length1 = a.size();
-			int length2 = b.size();
-			char c[(length1 > length2 ? length1 : length2) + 2];
-			char f = '0';
-			int index = 0;
-			while (length1 > 0 && length2 > 0) {
-				c[index++] = sum(a[length1 - 1], b[length2 - 1], f);
-				f = flag(a[length1 - 1], b[length2 - 1], f);
-				length1--;	
-				length2--;	
-			}
-			while (length1 > 0) {
-				c[index++] = sum(a[length1 - 1], '0', f);
-				f = flag(a[length1 - 1], '0', f);
-				length1--;
-			}
-			while (length2 > 0) {
-				c[index++] = sum('0', b[length2 - 1], f);
-				f = flag('0', b[length2 - 1], f);
-				length2--;	
-			}
-			if (f == '1') {
-				c[index++] = '1';
-			}
-			c[index] = '\0';
+ public:
+   string addBinary(string a, string b) {
+     if (a.size() > b.size()) {
+       return addBinary(b, a);
+     }
+     std::reverse(a.begin(), a.end());
+     std::reverse(b.begin(), b.end());
 
-			for (int i = 0; i < index/2; i++) {
-				char temp = c[i];
-				c[i] = c[(index - 1)- i];
-				c[(index - 1)- i] = temp;
-			}
+     string sum;
+     char carry = '0';
+     size_t i = 0;
+     while (i < a.size()) {
+       sum += internalAdd(a[i], b[i], carry);
+       ++i;
+     }
+     while (i < b.size()) {
+       sum += internalAdd('0', b[i], carry);
+       ++i;
+     }
+     if (carry == '1') {
+       sum += '1';
+     }
+     std::reverse(sum.begin(), sum.end());
 
-			return string(c);
-		}
+     return sum;
+   }
 
-		char sum(char x, char y, char f) {
-			int a = x - '0';
-			int b = y - '0';
-			int flag = f - '0';
-			return int2char[(a + b + flag) % 2];
-		}
+ private:
+   char internalAdd(char ch1, char ch2, char& carry) {
+     int n1 = ch1 - '0';
+     int n2 = ch2 - '0';
+     int c = carry - '0';
+     int sum = n1 + n2 + c;
 
-		char flag(char x, char y, char f) {
-			int a = x - '0';
-			int b = y - '0';
-			int flag = f - '0';
-			return int2char[(a + b + flag) / 2];
-		}
-
-	private:
-		char int2char[2];
-}; 
-
+     carry = (sum >= 2) ? '1' : '0';
+     return (sum % 2) + '0';
+   }
+};
