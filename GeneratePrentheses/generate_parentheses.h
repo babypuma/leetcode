@@ -1,38 +1,42 @@
+/*
+ * Author : Jeremy Zhao
+ * Email  : jqzhao@live.com
+ * Date   : 2015/03/18
+ * Update : 2021/01/05
+ *
+ * Source : https://leetcode-cn.com/problems/generate-parentheses/
+ * Problem: Generate Parentheses
+ *               
+ */
 #include <vector>
 #include <string>
 using std::vector;
 using std::string;
-using std::pair;
 
 class Solution {
-	public:
-	    vector<string> generateParenthesis(int n) {
-			pair<int, int> counter(n, n);
-			char buffer[2*n + 1];
+ public:
+   vector<string> generateParenthesis(int n) {
+     vector<string> solution;
+     string str;
+     backtrack(0, 0, n, str, solution);
+     return solution;
+   }
 
-			generate(buffer, 0, counter);
-			return vec;
-		}
+ private:
+   void backtrack(int left_count, int right_count, int n, string& str, vector<string>& solution) {
+     if (right_count > left_count || left_count > n || right_count > n) {
+       return;
+     }
+     if (left_count == right_count && left_count == n) {
+       solution.push_back(str);
+       return;
+     }
+     str.push_back('(');
+     backtrack(left_count + 1, right_count, n, str, solution);
+     str.pop_back();
 
-		void generate(char buffer[], int num, pair<int, int> &rest) {
-			if (rest.first == 0 && rest.second == 0) {
-				vec.push_back(string(buffer, num));
-				return;
-			}
-			
-			if (rest.first > 0) {
-				buffer[num] = '(';
-				rest.first--;
-				generate(buffer, num + 1, rest);
-				rest.first++;
-			}
-			if (rest.second > rest.first) {
-				buffer[num] = ')';
-				rest.second--;
-				generate(buffer, num + 1, rest);
-				rest.second++;
-			}
-		}
-	private:
-		vector<string> vec;
+     str.push_back(')');
+     backtrack(left_count, right_count + 1, n, str, solution);
+     str.pop_back();
+   }
 };
