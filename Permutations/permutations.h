@@ -2,6 +2,7 @@
  * Author : Jeremy Zhao
  * Email  : jqzhao@live.com
  * Date   : 2020/09/03
+ * Update : 2021/01/05
  *
  * Source : https://leetcode.com/problems/permutations/
  * Problem:	Permutations
@@ -14,8 +15,6 @@ using std::unordered_set;
 class Solution {
  public:
    vector<vector<int> > permute(vector<int>& nums) {
-     std::sort(nums.begin(), nums.end());
-
      vector<int> solution;
      unordered_set<int> index;
      vector<vector<int> > solutions;
