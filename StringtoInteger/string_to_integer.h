@@ -1,51 +1,55 @@
+/*
+ * Author : Jeremy Zhao
+ * Email  : jqzhao@live.com
+ * Date   : 2015/03/18
+ * Update : 2021/01/07
+ *
+ * Source : https://leetcode-cn.com/problems/string-to-integer-atoi/
+ * Problem: String to Integer (atoi)
+ *               
+ */
+#include <string>
+#include <vector>
+using std::string;
+using std::vector;
+
 class Solution {
-	public:
-	    int atoi(const char *str) { 
-			int i = 0;
-			while (str[i] == ' ') {
-				i++;
-			}
+ public:
+   int myAtoi(string s) {
+     size_t i = 0;
+     for (; i < s.size() && s[i] == ' '; ++i) {
+     }
 
-			int number = 0;
-			int sign = 1;
-			if (str[i] == '+') {
-				sign = 1;
-			}
-			else if (str[i] == '-') {
-				sign = -1;
-			}
-			else if (str[i] >= '0' && str[i] <= '9') {
-				number = str[i] - '0';
-			}
-			else {
-				return 0;
-			}
+     int sign = 1;
+     if (i < s.size() && (s[i] == '+' || s[i] == '-')) {
+       if (s[i] == '-') {
+         sign = -1;
+       }
+       ++i;
+     }
 
-			const int MY_INT32_MAX = 0x7FFFFFFF;
-			const int MY_INT32_MIN = 0x80000000;
-			int incr;
-			while (str[++i] != '\0') {
-				if (str[i] < '0' || str[i] > '9') {
-					break;
-				}
+     if (i < s.size() && !isdigit(s[i])) {
+       return 0;
+     }
 
-				if (number > MY_INT32_MAX/10) {
-					number = -1;
-					break;
-				}
-				number *= 10;
+     int num = 0;
+     for (; i < s.size() && isdigit(s[i]); ++i) {
+       if (num > 0 && sign < 0) {
+         num *= sign;
+       }
+       if (sign > 0 && num > (INT32_MAX - (s[i] - '0')) / 10) {
+         num = INT32_MAX;
+         break;
+       }
+       if (sign < 0 && num < (INT32_MIN + (s[i] - '0')) / 10) {
+         num = INT32_MIN;
+         break;
+       }
+       num *= 10;
+       int incr = s[i] - '0';
+       num = (sign > 0) ? num + incr : num - incr;
+     }
 
-				incr = str[i] - '0';
-				if (number > MY_INT32_MAX - incr) {
-					number = -1;
-					break;
-				}
-				number += incr;
-			}
-
-			if (number < 0) {
-				return sign > 0 ? MY_INT32_MAX : MY_INT32_MIN;
-			}
-			return number * sign;
-		}
+     return num;
+   }
 };
