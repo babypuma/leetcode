@@ -1,65 +1,43 @@
+/*
+ * Author : Jeremy Zhao
+ * Email  : jqzhao@live.com
+ * Date   : 2015/03/18
+ * Update : 2021/01/08
+ *
+ * Source : https://leetcode-cn.com/problems/3sum-closest/
+ * Problem: 3Sum Closest
+ *               
+ */
 #include <algorithm>
 #include <vector>
 using std::vector;
 
 class Solution {
-	public:
-	    int threeSumClosest(vector<int> &num, int target) {
-			sort(num.begin(), num.end());
-			int length = num.size();
-			int sum;
-			int index;
-			int first;
-			int gap = 0x7FFFFFFF;
-			int closest;
-			for (int i = 0; i < length - 2; i++) {
-				if (i == 0) {
-					first = num[0];
-				}
-				else {
-					if (num[i] == first) {
-						continue;
-					}
-					else {
-						first = num[i];
-					}
-				}
-				for (int j = i + 1; j < length - 1; j++) {
-					sum = num[i] + num[j];
-					index = binarySearch(num, j + 1, length - 1, target - sum);
-					if (index < length && num[index] + sum - target < gap) {
-						closest = num[index] + sum;
-						gap = closest - target;
-						if (gap == 0) {
-							return target;
-						}
-					}
-					if (index - 1 > j && target - sum - num[index-1] < gap) {
-						closest = sum + num[index-1];
-						gap = target - closest;
-					} 
-				}
-			}
+ public:
+   int threeSumClosest(vector<int> &num, int target) {
+     int sum = num[0] + num[1] + num[2];
+     std::sort(num.begin(), num.end());
+     for (int i = 0; i < num.size() - 2; ++i) {
+       int n1 = num[i];
+       int left = i + 1;
+       int right = num.size() - 1;
+       while (left < right) {
+         if (num[left] + num[right] + n1 == target) {
+           sum = target;
+           break;
+         }
 
-			return closest;
-		}
+         if (std::abs(target - (num[left] + num[right] + n1)) < std::abs(target - sum)) {
+           sum = num[left] + num[right] + n1;
+         }
 
-		int binarySearch(vector<int> &vec, int left, int right, int val) {
-			int mid;
-			while (left <= right) {
-				mid = (left + right)/2;
-				if (vec[mid] == val) {
-					return mid;
-				}
-				
-				if (vec[mid] < val) {
-					left = mid + 1;
-				}
-				else {
-					right = mid - 1;
-				}
-			}
-
-			return left;
-		}
+         if (num[left] + num[right] + n1 < target) {
+           ++left;
+         } else {
+           --right;
+         }
+       }
+     }
+     return sum;
+   }
 };
