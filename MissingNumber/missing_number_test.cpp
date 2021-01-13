@@ -1,14 +1,24 @@
+/*
+ * Author : Jeremy Zhao
+ * Email  : jqzhao@live.com
+ * Date   : 2020/05/20
+ * Update : 2021/01/13
+ *
+ * Source : https://leetcode-cn.com/problems/missing-number/
+ * Problem: Missing Number
+ *               
+ */
 #include <gtest/gtest.h>
 #include "missing_number.h"
 
 class SolutionTest : public ::testing::Test {
-    protected:
-        virtual void SetUp() {
-        }
-        virtual void TearDown() {
-        }
+ protected:
+   virtual void SetUp() {
+   }
+   virtual void TearDown() {
+   }
 
-        Solution solution_;
+   Solution solution_;
 };
 
 TEST_F(SolutionTest, combinationSum) {
