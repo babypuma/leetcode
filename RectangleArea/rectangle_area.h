@@ -2,13 +2,10 @@
  * Author : Jeremy Zhao
  * Email  : jqzhao@live.com
  * Date   : 2015/06/16
+ * Update : 2021/01/18
  *
- * Source : https://leetcode.com/problems/rectangle-area/
+ * Source : https://leetcode-cn.com/problems/rectangle-area/
  * Problem:	Rectangle Area
- * Description: 
- *	Find the total area covered by two rectilinear rectangles in a 2D plane.  
- * 	Each rectangle is defined by its bottom left corner and top right corner as shown in the figure.
- * 	Assume that the total area is never beyond the maximum possible value of int.
  *
  */
 class Solution {
@@ -17,7 +14,7 @@ class Solution {
 			int area1 = rectangleArea(C - A, D - B);
 			int area2 = rectangleArea(G - E, H - F);
 			int area3 = intersectionArea(A, B, C, D, E, F, G, H);
-			return area1 + area2 - area3;
+			return area1 - area3 + area2;
 		}
 
 		int rectangleArea(int x, int y) {
@@ -34,6 +31,7 @@ class Solution {
 
 		int intersectionLength(int u, int v, int x, int y) {
 			int array[4] = {u, v, x, y};
+      // insertion sort
 			for (int i = 1; i < 4; i++) {
 				int tmp = array[i];
 				int j = i;
