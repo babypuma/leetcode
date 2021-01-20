@@ -1,8 +1,10 @@
 /*
  * Author : Jeremy Zhao
  * Email  : jqzhao@live.com
+ * Date   : 2015/06/16
+ * Update : 2021/01/20
  *
- * Source : https://leetcode.com/problems/isomorphic-strings/
+ * Source : https://leetcode-cn.com/problems/isomorphic-strings/
  * Problem:	Isomorphic Strings
  *
  */
@@ -10,22 +12,22 @@
 #include "isomorphic_strings.h"
 
 class SolutionTest : public ::testing::Test {
-    protected:
-        virtual void SetUp() {
-        }
-        virtual void TearDown() {
-        }
+ protected:
+   virtual void SetUp() {
+   }
+   virtual void TearDown() {
+   }
 
-        Solution solution_;
+   Solution solution_;
 };
 
 TEST_F(SolutionTest, case1) {
-	EXPECT_TRUE(solution_.isIsomorphic("egg", "add"));
-	EXPECT_TRUE(solution_.isIsomorphic("paple", "title"));
-	EXPECT_FALSE(solution_.isIsomorphic("foo", "bar"));
+  EXPECT_TRUE(solution_.isIsomorphic("egg", "add"));
+  EXPECT_TRUE(solution_.isIsomorphic("paple", "title"));
+  EXPECT_FALSE(solution_.isIsomorphic("foo", "bar"));
 }
 
 TEST_F(SolutionTest, case2) {
-	EXPECT_FALSE(solution_.isIsomorphic("ab", "aa"));
+  EXPECT_FALSE(solution_.isIsomorphic("ab", "aa"));
 }
 
