@@ -25,15 +25,15 @@ class Solution {
      int j = 0;
      int sum = 0;
      while (j < sz) {
+       if (sum > maxCost) {
+         sum -= costs[i];
+         ++i;
+       }
        sum += costs[j];
        if (sum <= maxCost) {
          ans = std::max(ans, j - i + 1);
        }
        ++j;
-       if (sum > maxCost) {
-         sum -= costs[i];
-         ++i;
-       }
      }
      return ans;
    }
