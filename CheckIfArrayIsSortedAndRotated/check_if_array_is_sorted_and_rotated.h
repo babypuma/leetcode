@@ -4,12 +4,10 @@
  * Date   : 2021/02/07
  *
  * Source : https://leetcode-cn.com/problems/check-if-array-is-sorted-and-rotated/
- * Problem: check_if_array_is_sorted_and_rotated.h
+ * Problem: Check if Array Is Sorted and Rotated
  *               
  */
-#include <string>
 #include <vector>
-using std::string;
 using std::vector;
 
 class Solution {
