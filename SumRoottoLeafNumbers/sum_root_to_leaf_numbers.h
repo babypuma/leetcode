@@ -25,11 +25,11 @@ class Solution {
  public:
    int sumNumbers(TreeNode *root) {
      int num = 0;
-     return sumNumbersNoRecursive(root, num);
+     return sumNumbersRecursive(root, num);
    }
 
  private:
-   int sumNumbersNoRecursive(TreeNode *root, int num) {
+   int sumNumbersRecursive(TreeNode *root, int num) {
      if (root == nullptr) {
        return 0;
      }
@@ -37,16 +37,16 @@ class Solution {
        return num * 10 + root->val;
      }
      if (root->left == nullptr && root->right != nullptr) {
-       return sumNumbersNoRecursive(root->right, num * 10 + root->val);
+       return sumNumbersRecursive(root->right, num * 10 + root->val);
      }
      if (root->left != nullptr && root->right == nullptr) {
-       return sumNumbersNoRecursive(root->left, num * 10 + root->val);
+       return sumNumbersRecursive(root->left, num * 10 + root->val);
      }
-     return sumNumbersNoRecursive(root->left, num * 10 + root->val) +
-       sumNumbersNoRecursive(root->right, num * 10 + root->val);
+     return sumNumbersRecursive(root->left, num * 10 + root->val) +
+       sumNumbersRecursive(root->right, num * 10 + root->val);
    }
 
-   int sumNumbersRecursive(TreeNode *root) {
+   int sumNumbersNoRecursive(TreeNode *root) {
      enum status {
        st_left,
        st_right,
