@@ -2,32 +2,25 @@
  * Author : Jeremy Zhao
  * Email  : jqzhao@live.com
  * Date   : 2020/09/12
+ * Update : 2021/03/03
  *
  * Source : https://leetcode-cn.com/problems/counting-bits/
  * Problem:	Counting Bits
  *
  */
 #include <vector>
-#include <cmath>
 using std::vector;
 
 class Solution {
  public:
    vector<int> countBits(int num) {
      vector<int> dp(num + 1, 0);
-     size_t i = 1;
-     // num为2的整数次幂时，比特位计数为1
-     while (i < dp.size()) {
-       dp[i] = 1;
-       i <<= 1;
-     }
-     // num为非2的整数次幂时，n比特位计数为num - 2^(floor(lg(num)))
-     for (i = 2; i < dp.size(); ++i) {
-       if (dp[i] == 1) {
-         continue;
+     int high_bit = 0;
+     for (int i = 1; i <= num; ++i) {
+       if ((i & (i - 1)) == 0) {
+         high_bit = i;
        }
-       int prev = i - (1 << static_cast<int>(std::log2(i)));
-       dp[i] = dp[prev] + 1;
+       dp[i] = dp[i - high_bit] + 1;
      }
      return dp;
    }
