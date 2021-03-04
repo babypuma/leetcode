@@ -3,6 +3,7 @@
  * Email  : jqzhao@live.com
  * Date   : 2014/11/07
  * Update : 2021/02/18
+ * Update : 2021/03/04
  *
  * Source : https://leetcode-cn.com/problems/sum-root-to-leaf-numbers/
  * Problem:	Sum Root to Leaf Numbers
@@ -24,26 +25,19 @@ struct TreeNode {
 class Solution {
  public:
    int sumNumbers(TreeNode *root) {
-     int num = 0;
-     return sumNumbersRecursive(root, num);
+     return dfs(root, 0);
    }
 
  private:
-   int sumNumbersRecursive(TreeNode *root, int num) {
+   int dfs(TreeNode *root, int num) {
      if (root == nullptr) {
        return 0;
      }
+     num = 10 * num + root->val;
      if (root->left == nullptr && root->right == nullptr) {
-       return num * 10 + root->val;
+       return num;
      }
-     if (root->left == nullptr && root->right != nullptr) {
-       return sumNumbersRecursive(root->right, num * 10 + root->val);
-     }
-     if (root->left != nullptr && root->right == nullptr) {
-       return sumNumbersRecursive(root->left, num * 10 + root->val);
-     }
-     return sumNumbersRecursive(root->left, num * 10 + root->val) +
-       sumNumbersRecursive(root->right, num * 10 + root->val);
+     return dfs(root->left, num) + dfs(root->right, num);
    }
 
    int sumNumbersNoRecursive(TreeNode *root) {
